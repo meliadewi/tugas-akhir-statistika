@@ -1,0 +1,51 @@
+# Ni Made Melia Dewi (2415091102)
+# Simulasi Regresi Linear Sederhana di R
+
+#Import Data
+library(readxl)  # Library untuk membaca file Excel
+library(lmtest)  # Library untuk uji asumsi
+library(car)     # Library untuk analisis statistik
+
+# Membaca data dari file Excel
+file_path <- "/Users/meliadewi/Documents/STATISTIKA/DATA REGRESI LINIER SEDERHANA.xlsx"
+data <- read_excel("/Users/meliadewi/Documents/STATISTIKA/DATA REGRESI LINIER SEDERHANA.xlsx")
+
+# Melihat ringkasan data
+summary(data)
+head(data)
+
+# Analisis Regresi Linear Sederhana
+model <- lm(Y ~ X, data = data)
+
+# Melihat hasil analisis regresi
+summary(model)
+
+# Uji Asumsi 
+
+# Uji  Normalitas Residual
+shapiro.test(residuals(model)) # Uji Shapiro-Wilk
+qqnorm(residuals(model))       # Q-Q Plot
+qqline(residuals(model), col = "blue")
+
+# Uji  Homoskedastisitas
+bptest(model)                  # Breusch-Pagan Test
+plot(model, which = 1)         # Residual vs Fitted Plot
+
+# Uji  Linearitas
+plot(data$X, data$Y, main = "Scatter Plot dengan Garis Regresi", xlab = "X", ylab = "Y")
+abline(model, col = "blue")  # Garis regresi
+
+# Visualisasi
+# Scatter plot dengan garis regresi
+plot(data$X, data$Y, main = "Hubungan Linear antara X dan Y", xlab = "X", ylab = "Y")
+abline(model, col = "blue", lwd = 2)
+
+# Interpretasi
+# Hasil Analisis:
+# - Koefisien regresi: Menunjukkan hubungan antara X dan Y.
+# - R-squared: Proporsi variasi Y yang dijelaskan oleh X.
+# - P-value: Jika < 0.05, hubungan linear signifikan.
+
+# Kesimpulan
+# Jika semua uji asumsi terpenuhi dan model signifikan, maka X dapat digunakan untuk memprediksi Y.
+
